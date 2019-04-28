@@ -1,0 +1,41 @@
+{
+  "name": "@types/antv__g6",
+  "version": "1.0.0",
+  "description": "TypeScript definitions for @antv/g6",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "crayonzx",
+      "url": "https://github.com/crayonzx",
+      "githubUsername": "crayonzx"
+    },
+    {
+      "name": "Harpes",
+      "url": "https://github.com/Harpes",
+      "githubUsername": "Harpes"
+    },
+    {
+      "name": "Xuandong95",
+      "url": "https://github.com/Xuandong95",
+      "githubUsername": "Xuandong95"
+    }
+  ],
+  "main": "",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crayonzx/types-antv-g6.git"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@types/antv__util": "^1.0.0"
+  },
+  "typesPublisherContentHash": "",
+  "typeScriptVersion": "3.0"
+}

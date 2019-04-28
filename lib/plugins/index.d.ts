@@ -1,0 +1,26 @@
+declare const plugins: {
+    'behaviour.analysis': typeof import('./behaviour.analysis/');
+    'edge.polyline': typeof import('./edge.polyline');
+    'edge.quadraticCurve': typeof import('./edge.quadraticCurve/');
+    'layout.archimeddeanSpiral': typeof import('./layout.archimeddeanSpiral/');
+    'layout.circle': typeof import('./layout.circle/');
+    'layout.dagre': typeof import('./layout.dagre/');
+    'layout.forceAtlas2': typeof import('./layout.forceAtlas2/');
+    'layout.grid': typeof import('./layout.grid/');
+    'template.maxSpanningForest': typeof import('./template.maxSpanningForest/');
+    'template.tableSankey': typeof import('./template.tableSankey/');
+    'tool.d3.mapper': typeof import('./tool.d3.mapper/');
+    'tool.fisheye': typeof import('./tool.fisheye/');
+    'tool.freezeSize': typeof import('./tool.freezeSize/');
+    'tool.gird': typeof import('./tool.grid/');
+    'tool.highlightSubgraph': typeof import('./tool.highlightSubgraph/');
+    'tool.mapper': typeof import('./tool.mapper/');
+    'tool.minimap': typeof import('./tool.minimap/');
+    'tool.textDisplay': typeof import('./tool.textDisplay/');
+    'tool.tooltip': typeof import('./tool.tooltip/');
+    'util.backbone': typeof import('./util.backbone/');
+    'util.dataCleaner': typeof import('./util.dataCleaner/');
+    'util.extractSubgraph': typeof import('./util.extractSubgraph/');
+    'util.randomData': typeof import('./util.randomData/');
+};
+export = plugins;
