@@ -1,6 +1,6 @@
 {
   "name": "@types/antv__g6",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript definitions for @antv/g6",
   "license": "MIT",
   "contributors": [
@@ -34,6 +34,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
+    "@types/antv__g": "^1.0.0",
     "@types/antv__util": "^1.0.0"
   },
   "typesPublisherContentHash": "",
