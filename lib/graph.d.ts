@@ -1,4 +1,5 @@
 /// <reference types="@antv/util" />
+/// <reference types="antv__g" />
 import Base = require('./base');
 import Util = require('./util/');
 import G = require('@antv/g/lib');

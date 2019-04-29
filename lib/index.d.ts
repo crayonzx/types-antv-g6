@@ -1,3 +1,4 @@
+/// <reference types="antv__g" />
 /// <reference types="@antv/util" />
 import Handler = require('./handler');
 import G_ = require('@antv/g/lib');
