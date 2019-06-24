@@ -2,7 +2,6 @@
  * @fileOverview animate controller
  * @author huangtonger@aliyun.com
  */
-/// <reference types="antv__g" />
 import Base = require('./base');
 declare class Controller extends Base {
     getDefaultCfg(): {

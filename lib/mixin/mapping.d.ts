@@ -2,6 +2,7 @@
  * @fileOverview mapping mixin
  * @author huangtonger@aliyun.com
  */
+import Mapper = require('../controller/mapper');
 declare const _default: {
     INIT: string;
     AUGMENT: {
@@ -11,25 +12,25 @@ declare const _default: {
          * @param  {array} channels mapping channel
          * @return {object} nodeMapper
          */
-        node(channels: any): any;
+        node(channels: Mapper.Channels): any;
         /**
          * edge mapping
          * @param  {array} channels mapping channel
          * @return {object} edgeMapper
          */
-        edge(channels: any): any;
+        edge(channels: Mapper.Channels): any;
         /**
          * group mapping
          * @param  {array} channels mapping channel
          * @return {object} groupMapper
          */
-        group(channels: any): any;
+        group(channels: Mapper.Channels): any;
         /**
          * guide mapping
          * @param  {array} channels mapping channel
          * @return {object} guideMapper
          */
-        guide(channels: any): any;
+        guide(channels: Mapper.Channels): any;
     };
 };
 export = _default;

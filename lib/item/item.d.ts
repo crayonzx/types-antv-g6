@@ -1,5 +1,4 @@
 /// <reference types="@antv/util" />
-/// <reference types="antv__g" />
 /**
  * @fileOverview item
  * @author huangtonger@aliyun.com

@@ -1,5 +1,4 @@
 /// <reference types="@antv/util" />
-/// <reference types="antv__g" />
 import Base = require('./base');
 import Util = require('./util/');
 import G = require('@antv/g/lib');
@@ -19,10 +18,13 @@ declare const Mixins: ({
     INIT: string;
     AUGMENT: {
         _initMapper(): void;
-        node(channels: any): any;
-        edge(channels: any): any;
-        group(channels: any): any;
-        guide(channels: any): any;
+        node(channels: import("./controller/mapper").Channels): any;
+        edge(channels: import("./controller/mapper").Channels): any;
+        group(channels: import("./controller/mapper").Channels): any;
+        guide(channels: import("./controller/mapper").Channels): any; /**
+         * FontFamily
+         * @type {string}
+         */
     };
 } | {
     AUGMENT: {
@@ -58,12 +60,13 @@ declare const Mixins: ({
             leave: string | import("./controller/animate").ConfigCallback;
             update: string | import("./controller/animate").ConfigCallback;
             graph: any;
-            startCache: {};
-            endCache: {}; /**
+            /**
              * Canvas width
              * @type {number|undefined}
              * unit pixel if undefined force fit width
              */
+            startCache: {};
+            endCache: {};
             keykeyCache: {};
         }>;
     };
@@ -94,10 +97,7 @@ declare const Mixins: ({
     AUGMENT: {
         getBBox(this: Graph): G.Common.BBox;
         getFitViewPadding(): number[];
-        setFitView(type: string): any; /**
-         * default group shape
-         * @type {string|undefined}
-         */
+        setFitView(type: string): any;
         _getZoomRatio(ratio: any): any;
         autoZoom(padding: any): void;
         getZoom(): number;
@@ -150,10 +150,6 @@ declare const Mixins: ({
         changeMode(modeName: string): void;
         addBehaviour(behaviour: string | any[], mode: string): any;
         removeBehaviour(behaviour: string | any[]): any;
-        /**
-         * default group shape
-         * @type {string|undefined}
-         */
         behaviourOn(type: string, fn: (...args: any[]) => any): void;
         _off(): void;
     };
@@ -253,7 +249,7 @@ declare class Graph extends Base {
      * @param  {string} type item type
      * @param  {array} models models
      */
-    _addItems(type: any, models: any): void;
+    _addItems(type: Item_.Type, models: Model.Base[]): void;
     /**
      * @param  {array} items remove items
      */
@@ -330,7 +326,7 @@ declare class Graph extends Base {
      * @param {object} model data model
      * @return {Item} target item
      */
-    add(type: string, model: Model.Base): Item_.Base;
+    add(type: Item_.Type, model: Model.Base): Item_.Base;
     /**
      * @param {string|Item} item - target item
      * @return {Graph} this
@@ -399,7 +395,7 @@ declare class Graph extends Base {
      * set cantainer css
      * @param  {object} style container dom css
      */
-    css(style: any): void;
+    css(style: CSS.Properties<string | number>): void;
     /**
      * save graph image
      * @param {object} options - save options
@@ -412,6 +408,7 @@ import Model from './model';
 import Item_ from './items';
 import Event from './event';
 import { GraphEx, EventsEx } from './augments';
+import * as CSS from 'csstype';
 interface Graph extends Graph.MixedAugmentType, GraphEx {
     _cfg: Required<Graph.Config> & {
         id: string;

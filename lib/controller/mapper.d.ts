@@ -12,3 +12,15 @@ declare class Controller extends Base {
     mapping(model: any): void;
 }
 export = Controller;
+import Model from '../model';
+declare namespace Controller {
+    type ChannalType = string | number | object | boolean | null | undefined | ((model: Model.Base) => any);
+    interface Channels {
+        color?: ChannalType;
+        shape?: ChannalType;
+        size?: ChannalType;
+        label?: ChannalType;
+        style?: ChannalType;
+        [x: string]: ChannalType;
+    }
+}

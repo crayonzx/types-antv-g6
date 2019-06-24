@@ -11,8 +11,12 @@ declare const _default: {
     clone: <T>(obj: T) => T;
     remove: (arr: any, predicate: any) => any[];
     transform: (m: any, ts: any) => any;
-    throttle: <T extends (...args: any[]) => any>(func: T, wait?: number, options?: import("lodash").ThrottleSettings) => T & import("lodash").Cancelable;
-    debounce: <T extends (...args: any[]) => any>(func: T, wait?: number, options?: import("lodash").DebounceSettings) => T & import("lodash").Cancelable;
+    reduce: (arr: any, fn: any, init: any) => any;
+    find: (arr: any, predicate: any) => any;
+    keys: (obj: any) => any[];
+    values: (obj: any) => any;
+    throttle: <T extends (...args: any) => any>(func: T, wait?: number, options?: import("lodash").ThrottleSettings) => T & import("lodash").Cancelable;
+    debounce: <T extends (...args: any) => any>(func: T, wait?: number, options?: import("lodash").DebounceSettings) => T & import("lodash").Cancelable;
     toAllPadding: (padding: number | number[]) => number[];
     guid: () => string;
     mixin: (c: any, mixins: any) => void;
@@ -224,16 +228,16 @@ declare const _default: {
         isArguments: (value: any) => boolean;
         isError: (value: any) => value is Error;
     };
-    augment: <T extends GUtil.TwoFunctionTypes, U extends any[]>(dist: T, ...src: U) => (new (...args: GUtil.ArgsType<GUtil.ToClassType<T>>) => GUtil._Overwrite<GUtil.ProtoType<GUtil.ToClassType<T>>, GUtil.UnionToIntersection<GUtil.ProtoType<U extends (infer V)[] ? V : never>>>) & { [P in keyof GUtil.ToClassType<T>]: GUtil.ToClassType<T>[P]; };
+    augment: <T extends GUtil.TwoFunctionTypes, U extends any[]>(dist: T, ...src: U) => (new (...args: GUtil.ArgsType<GUtil.ToClassType<T>>) => GUtil._Overwrite<GUtil.ProtoType<GUtil.ToClassType<T>>, GUtil.UnionToIntersection<GUtil.ProtoType<U extends (infer V)[] ? V : never>>>) & { [P in Exclude<keyof GUtil.ToClassType<T>, never>]: GUtil.ToClassType<T>[P]; };
     deepMix: <T, U extends any[]>(dist: T, ...src: U) => T & GUtil.MixArray<U, undefined>;
     each: {
         <T>(elements: T[], func: (value: T, index: number) => boolean | void): void;
         <T extends object>(elements: T, func: <K extends keyof T>(value: T[K], key: K) => boolean | void): void;
     };
-    extend: <T extends GUtil.TwoFunctionTypes, U extends GUtil.NewFunctionType, V, W>(subclass: T, superclass: U, overrides?: V, staticOverrides?: W) => { [P in keyof GUtil.ToClassType<T>]: GUtil.ToClassType<T>[P]; } & {
+    extend: <T extends GUtil.TwoFunctionTypes, U extends GUtil.NewFunctionType, V, W>(subclass: T, superclass: U, overrides?: V, staticOverrides?: W) => { [P in Exclude<keyof GUtil.ToClassType<T>, never>]: GUtil.ToClassType<T>[P]; } & {
         new (...args: GUtil.ArgsType<GUtil.ToClassType<T>>): GUtil._Overwrite<GUtil._Overwrite<GUtil.NewReturnType<U>, GUtil.NewReturnType<GUtil.ToClassType<T>>>, V>;
         superclass: U;
-    } & { [P in keyof (W extends null ? {} : W)]: (W extends null ? {} : W)[P]; };
+    } & { [P in Exclude<keyof (W extends null ? {} : W), never>]: (W extends null ? {} : W)[P]; };
     groupBy: (data: any, condition: any) => any;
     groupToMap: (data: any, condition: any) => any;
     isEmpty: (value: any) => boolean;
@@ -255,7 +259,6 @@ declare const _default: {
     requestAnimationFrame: (fn: any) => any;
     contains: (arr: any, value: any) => boolean;
     difference: (arr: any[], ...args: any[]) => any[];
-    find: (arr: any, predicate: any) => any;
     firstValue: (data: any, name: any) => any;
     flatten: (arr: any[]) => any[];
     flattenDeep: (arr: any[], ...args: any[]) => any[];
@@ -266,7 +269,6 @@ declare const _default: {
     merge: (dataArray: any) => any[];
     pull: (arr: any, ...args: any[]) => any;
     pullAt: (arr: any, indexes: any) => any;
-    reduce: (arr: any, fn: any, init: any) => any;
     sortBy: (arr: any, key: any) => any;
     union: (...args: any[]) => any[];
     uniq: (arr: any) => any[];
@@ -309,9 +311,7 @@ declare const _default: {
     has: (obj: any, key: any) => any;
     hasKey: (obj: any, key: any) => any;
     hasValue: (obj: any, value: any) => boolean;
-    keys: (obj: any) => any[];
     isMatch: (obj: any, attrs: any) => boolean;
-    values: (obj: any) => any;
     catmullRom2Bezier: (crp: number[], z: boolean) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
     catmullRomToBezier: (crp: number[], z: boolean) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
     fillPath: (source: any, target: any) => any;
