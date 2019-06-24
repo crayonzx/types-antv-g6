@@ -1,36 +1,30 @@
-const { exec } = require('child_process');
-const path = require('path');
+const { execSync } = require('child_process');
 const fs = require('fs');
+const path = require('path');
+const rimraf = require('rimraf');
 
-const OUT_DIR = 'types-antv-g6/lib';
-const CWD = path.resolve('..');
+const outDir = '../types-antv-g6/lib';
+const workingDir = path.resolve('../typed-g6');
+const command = `npx tsc --outDir ${outDir}`;
 
-/**
- * Remove directory recursively
- * @param {string} dir_path
- * @see https://stackoverflow.com/a/42505874/3027390
- */
-function rimraf(dir_path) {
-  if (fs.existsSync(dir_path)) {
-      fs.readdirSync(dir_path).forEach(function(entry) {
-          var entry_path = path.join(dir_path, entry);
-          if (fs.lstatSync(entry_path).isDirectory()) {
-              rimraf(entry_path);
-          } else {
-              fs.unlinkSync(entry_path);
-          }
-      });
-      fs.rmdirSync(dir_path);
-  }
+console.log('\nClearing lib folder...');
+rimraf.sync('./lib');
+
+console.log('\nCompiling definition files...');
+console.log(`>>> working dir: ${workingDir}`);
+console.log(`>>> ${command}`);
+
+var buffer = new Buffer('');
+
+try {
+  buffer = execSync(command, { cwd: workingDir });
+} catch (error) {
+  console.log(error);
 }
 
-console.log('Clearing lib folder...');
-rimraf('./lib');
+if (!fs.existsSync('./lib') || !fs.existsSync('./lib/index.d.ts')) {
+  console.log(buffer.toString());
+  throw Error('Compiling failed!!!');
+}
 
-const cmd = `npx tsc --outDir ${OUT_DIR}`;
-
-console.log('Compiling definition files...');
-console.log(`>>> ${cmd}`);
-exec(cmd, { cwd: CWD }, function callback() {
-  console.log('Done building.')
-});
+console.log('\nDone compiling.\n');

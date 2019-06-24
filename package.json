@@ -31,7 +31,7 @@
   },
   "scripts": {
     "build": "node build.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "@types/antv__g": "^1.0.1",
