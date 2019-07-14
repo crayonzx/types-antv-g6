@@ -25,10 +25,12 @@ try {
       .split('\n')
       .forEach((s) => {
         if (
+          s.includes('TS2506') ||
           s.includes('TS4023') ||
           s.includes('TS4082') ||
           s.includes('TS5055') ||
-          s.includes('private')
+          s.includes('private') ||
+          s.includes('types-antv-g/lib')
         ) {
           throw new Error(s);
         }
