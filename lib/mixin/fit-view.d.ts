@@ -1,12 +1,9 @@
-/// <reference types="@antv/util" />
 /**
  * @fileOverview graph fit canvas
  * @author huangtonger@aliyun.com
  */
-import Common from '@antv/g/lib/common';
-import Item from '../items';
-import Graph from '../graph';
-declare const _default: {
+/// <reference types="@antv/util" />
+declare const Mixin: {
     CFG: {
         /**
          * Adaptive viewport
@@ -132,4 +129,8 @@ declare const _default: {
         focusPointByDom(domPoint: Common.Point): Graph;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;
+import Common from '@antv/g/lib/common';
+import Item from '../items';
+import Graph from '../graph';

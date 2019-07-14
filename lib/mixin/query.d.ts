@@ -1,5 +1,8 @@
-import Item from '../items';
-declare const _default: {
+/**
+ * @fileOverview graph query
+ * @author huangtonger@aliyun.com
+ */
+declare const Mixin: {
     AUGMENT: {
         find<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(id: string): Item.Map<T>;
         /**
@@ -43,4 +46,6 @@ declare const _default: {
         getItem<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(item: string | Item.Map<T>): Item.Map<T>;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;
+import Item from '../items';

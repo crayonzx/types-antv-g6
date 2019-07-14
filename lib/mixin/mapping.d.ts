@@ -3,7 +3,7 @@
  * @author huangtonger@aliyun.com
  */
 import Mapper = require('../controller/mapper');
-declare const _default: {
+declare const Mixin: {
     INIT: string;
     AUGMENT: {
         _initMapper(): void;
@@ -33,4 +33,5 @@ declare const _default: {
         guide(channels: Mapper.Channels): any;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

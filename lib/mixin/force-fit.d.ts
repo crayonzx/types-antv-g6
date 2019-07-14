@@ -2,7 +2,7 @@
  * @fileOverview force fit mixin
  * @author huangtonger@aliyun.com
  */
-declare const _default: {
+declare const Mixin: {
     INIT: string;
     AUGMENT: {
         _initForceFit(): void;
@@ -15,4 +15,5 @@ declare const _default: {
         forceFit(type: any): any;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

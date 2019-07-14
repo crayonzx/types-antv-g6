@@ -1,4 +1,5 @@
-declare const _default: {
+declare const Mixin: {
+    INIT: string;
     CFG: {
         /**
          * filter or filters
@@ -6,7 +7,6 @@ declare const _default: {
          */
         filters: any[];
     };
-    INIT: string;
     AUGMENT: {
         _initFilter(): void;
         /**
@@ -31,4 +31,5 @@ declare const _default: {
         _getFilterItems(): any;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

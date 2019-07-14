@@ -2,7 +2,7 @@
  * @fileOverview draw
  * @author huangtonger@aliyun.com
  */
-declare const _default: {
+declare const Mixin: {
     INIT: string;
     AUGMENT: {
         _initDraw(): void;
@@ -10,4 +10,5 @@ declare const _default: {
         animateDraw(): void;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

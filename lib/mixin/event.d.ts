@@ -2,7 +2,8 @@
  * @fileOverview dom event handler
  * @author wuyue.lwy <wyueliu@gmail.com>
  */
-declare const _default: {
+declare const Mixin: {
+    INIT: string;
     CFG: {
         /**
          * keyboard Enable
@@ -10,9 +11,9 @@ declare const _default: {
          */
         keyboardEnable: boolean;
     };
-    INIT: string;
     AUGMENT: {
         _initEvents(): void;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

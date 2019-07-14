@@ -2,7 +2,7 @@
  * @fileOverview layout mixin
  * @author huangtonger@aliyun.com
  */
-declare const _default: {
+declare const Mixin: {
     CFG: {
         /**
          * Layout cfg
@@ -31,4 +31,5 @@ declare const _default: {
         getLayout(): any;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

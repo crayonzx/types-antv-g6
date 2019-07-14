@@ -1,4 +1,4 @@
-declare const _default: {
+declare const Mixin: {
     CFG: {
         /**
           * mode list  key - value, key - mode name, value - behaviors
@@ -47,4 +47,5 @@ declare const _default: {
         _off(): void;
     };
 };
-export = _default;
+export = Mixin;
+declare type Mixin = typeof Mixin;

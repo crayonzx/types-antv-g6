@@ -3,150 +3,18 @@
 import Base = require('./base');
 import Util = require('./util/');
 import G = require('@antv/g/lib');
-declare const Mixins: ({
-    CFG: {
-        filters: any[];
-    };
-    INIT: string;
-    AUGMENT: {
-        _initFilter(): void;
-        addFilter(filter: any): any;
-        removeFilter(filter: any): void;
-        filter(): void;
-        _getFilterItems(): any;
-    };
-} | {
-    INIT: string;
-    AUGMENT: {
-        _initMapper(): void;
-        node(channels: import("./controller/mapper").Channels): any;
-        edge(channels: import("./controller/mapper").Channels): any;
-        group(channels: import("./controller/mapper").Channels): any;
-        guide(channels: import("./controller/mapper").Channels): any; /**
-         * FontFamily
-         * @type {string}
-         */
-    };
-} | {
-    AUGMENT: {
-        find<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(id: string): Item_.Map<T>;
-        getNodes(): Item_.Node[];
-        getEdges(): Item_.Edge[];
-        getGroups(): Item_.Group[];
-        getGuides(): Item_.Guide[];
-        getItems(): Item_.Base[];
-        getItemByShape(shape: {
-            id: string;
-        }): Item_.Base; /**
-         * Canvas height
-         * @type {number|undefined}
-         * unit pixel if undefined force fit height
-         */
-        getItem<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(item: string | Item_.Map<T>): Item_.Map<T>;
-    };
-} | {
-    CFG: {
-        layout: object | Function;
-    };
-    INIT: string;
-    AUGMENT: {
-        _initLayout(): void;
-        _getLayoutCfg(): any;
-        layout(): any;
-        updateNodePosition(nodes: any): any;
-        changeLayout(processor: any): any;
-        getLayout(): any;
-    };
-} | {
-    CFG: {
-        animate: boolean | Partial<{
-            show: string | import("./controller/animate").ConfigCallback;
-            hide: string | import("./controller/animate").ConfigCallback;
-            enter: string | import("./controller/animate").ConfigCallback;
-            leave: string | import("./controller/animate").ConfigCallback;
-            update: string | import("./controller/animate").ConfigCallback;
-            graph: any;
-            startCache: {};
-            endCache: {};
-            keykeyCache: {};
-        }>;
-    };
-    INIT: string;
-    AUGMENT: {
-        _initAnimate(): void;
-    };
-} | {
-    INIT: string;
-    AUGMENT: {
-        _initDraw(): void;
-        draw(): void;
-        animateDraw(): void;
-    };
-} | {
-    INIT: string;
-    AUGMENT: {
-        _initForceFit(): void;
-        _bindForceEvent(type: any): void;
-        forceFit(type: any): any;
-    };
-} | {
-    CFG: {
-        fitView: "br" | "tr" | "lc" | "tl" | "bl" | "cc" | "tc" | "rc" | "bc" | "autoZoom";
-        fitViewPadding: number | number[];
-        minZoom: number;
-        maxZoom: number;
-    };
-    AUGMENT: {
-        getBBox(this: Graph): G.Common.BBox;
-        getFitViewPadding(): number[];
-        setFitView(type: string): any;
-        _getZoomRatio(ratio: any): any;
-        autoZoom(padding?: number | number[]): void;
-        getZoom(): number;
-        updateMatrix(matrix: any): any;
-        zoom(point: number | G.Common.Point, ratio?: number): any;
-        zoomByDom(domPoint: G.Common.Point, ratio: number): Graph;
-        translate(dx: number, dy: number): any;
-        translateByDom(dx: any, dy: any): any;
-        getMatrix(): any;
-        setMatrix(matrix: any): void;
-        getPoint(domPoint: G.Common.Point): G.Common.Point;
-        getPointByDom(domPoint: G.Common.Point): G.Common.Point;
-        getPointByCanvas(canvasPoint: G.Common.Point): G.Common.Point;
-        getPointByClient(clientPoint: G.Common.Point): G.Common.Point;
-        getDomPoint(point: G.Common.Point): G.Common.Point;
-        getCanvasPoint(point: G.Common.Point): G.Common.Point;
-        getClientPoint(point: G.Common.Point): G.Common.Point;
-        focus(item: string | Item_.Base): Graph;
-        focusPoint(point: G.Common.Point): Graph;
-        focusPointByDom(domPoint: G.Common.Point): Graph;
-    };
-} | {
-    CFG: {
-        keyboardEnable: boolean;
-    };
-    INIT: string;
-    AUGMENT: {
-        _initEvents(): void;
-    };
-} | {
-    CFG: {
-        modes: {
-            [mode: string]: string[];
-        };
-        mode: string;
-        _eventCache: {};
-    };
-    INIT: string;
-    AUGMENT: {
-        _initModes(): void;
-        changeMode(modeName: string): void;
-        addBehaviour(behaviour: string | any[], mode: string): any;
-        removeBehaviour(behaviour: string | any[]): any;
-        behaviourOn(type: string, fn: (...args: any[]) => any): void;
-        _off(): void;
-    };
-})[];
+import LayoutMixin = require('./mixin/layout');
+import MappingMixin = require('./mixin/mapping');
+import QueryMixin = require('./mixin/query');
+import EventMixin = require('./mixin/event');
+import ModeMixin = require('./mixin/mode');
+import FilterMixin = require('./mixin/filter');
+import AnimateMixin = require('./mixin/animate');
+import DrawMixin = require('./mixin/draw');
+import FitView = require('./mixin/fit-view');
+import ForceFit = require('./mixin/force-fit');
+declare const Mixins: Mixins;
+declare type Mixins = Array<FilterMixin | MappingMixin | QueryMixin | LayoutMixin | AnimateMixin | DrawMixin | ForceFit | FitView | EventMixin | ModeMixin>;
 declare class Graph extends Base {
     /**
      * Access to the default configuration properties
@@ -420,8 +288,8 @@ interface Graph extends Graph.MixedAugmentType, GraphEx {
     update<T extends Item_.Type | 'base' = 'base'>(item: G.Common.ID, model: Partial<Model.Map<T>> & Graph.AnyModel): any;
 }
 declare namespace Graph {
-    type MixedAugmentType = GUtil.MixArray<typeof Mixins, 'AUGMENT'>;
-    type MixedCfgType = GUtil.MixArray<typeof Mixins, 'CFG'>;
+    type MixedAugmentType = GUtil.MixArray<Mixins, 'AUGMENT'>;
+    type MixedCfgType = GUtil.MixArray<Mixins, 'CFG'>;
     type DefaultCfgType = ReturnType<Graph['getDefaultCfg']>;
     type Config = Partial<MixedCfgType & DefaultCfgType>;
     type ChangeEventObject = {
