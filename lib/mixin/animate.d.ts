@@ -4,7 +4,6 @@
  */
 import Animate = require('../controller/animate');
 declare const _default: {
-    INIT: string;
     CFG: {
         /**
          * animate switch
@@ -22,6 +21,7 @@ declare const _default: {
             keykeyCache: {};
         }>;
     };
+    INIT: string;
     AUGMENT: {
         _initAnimate(): void;
     };

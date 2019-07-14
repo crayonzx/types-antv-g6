@@ -1,6 +1,10 @@
+import EventEmitter from 'wolfy87-eventemitter';
 import G from '@antv/g/lib';
 import Item from './items';
-declare class Event {
+declare type Event_ = Pick<EventEmitter, Exclude<keyof EventEmitter, keyof Event0>> & Event0;
+interface Event extends Event_ {
+}
+interface Event0 {
     addListener: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event: K, listener: Event.EventHandler<Event.EventArgs<T, K>>) => T;
     addOnceListener: Event['addListener'];
     removeListener: Event['addListener'];
@@ -25,22 +29,22 @@ declare namespace Event {
         [event in E]: EventValue<T>;
     };
     type EventHandler<T extends any[]> = (...args: T) => any;
-    type Eventor<E extends string, T extends any[]> = {
+    interface Eventor<E extends string, T extends any[]> {
         _events: Event.Events<E, T>;
-    };
+    }
     type EventKeys<T extends Eventor<string, any[]>> = keyof T['_events'];
     type EventArgs<T extends Eventor<string, any[]>, K extends EventKeys<T>> = T['_events'][K]['__eventArgsType'];
     type MouseEvent = 'click' | 'dblclick' | 'mouseenter' | 'mouseleave' | 'mousedown' | 'mouseup' | 'mousemove' | 'dragstart' | 'drag' | 'dragend' | 'dragenter' | 'dragleave' | 'drop' | 'contextmenu' | 'wheel' | 'mousewheel';
     type KeyboardEvent = 'keydown' | 'keyup' | 'keypress';
     type DomEventMap = HTMLElementEventMap;
     type BaseEvent = DomEventMap['close'];
-    type EventObject<E extends BaseEvent = BaseEvent> = {
+    interface EventObject<E extends BaseEvent = BaseEvent> {
         /** drag 拖动子项 */
         currentItem: Item;
         /** drag 拖动图形 */
-        currentShape: G.Shapes.Base;
+        currentShape: G.Shape;
         /** 图形对象 */
-        shape: G.Shapes.Base;
+        shape: G.Shape;
         /** 子项 */
         item: Item;
         /** 原生的 dom 事件 */
@@ -56,14 +60,14 @@ declare namespace Event {
         /** 数据变更动作 add、update、remove、changeData */
         action?: 'add' | 'update' | 'remove' | 'changeData';
         /** mouseleave、dragleave 到达的图形 */
-        toShape?: G.Shapes.Base;
+        toShape?: G.Shape;
         /** mouseleave、dragleave 到达的子项 */
         toItem?: Item;
         /** mouseleave、dragleave 来自的图形 */
-        fromShape?: G.Shapes.Base;
+        fromShape?: G.Shape;
         /** 鼠标左中右键 */
         button: 0 | 1 | 2;
-    };
+    }
     type MouseEventObject = EventObject<DomEventMap['click']>;
     type KeyboardEventObject = EventObject<DomEventMap['keypress']>;
 }

@@ -1,5 +1,4 @@
 declare const _default: {
-    INIT: string;
     CFG: {
         /**
          * filter or filters
@@ -7,6 +6,7 @@ declare const _default: {
          */
         filters: any[];
     };
+    INIT: string;
     AUGMENT: {
         _initFilter(): void;
         /**

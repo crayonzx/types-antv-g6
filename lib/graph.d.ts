@@ -1,12 +1,13 @@
 /// <reference types="@antv/util" />
+/// <reference types="antv__g" />
 import Base = require('./base');
 import Util = require('./util/');
 import G = require('@antv/g/lib');
 declare const Mixins: ({
-    INIT: string;
     CFG: {
         filters: any[];
     };
+    INIT: string;
     AUGMENT: {
         _initFilter(): void;
         addFilter(filter: any): any;
@@ -28,20 +29,26 @@ declare const Mixins: ({
     };
 } | {
     AUGMENT: {
-        find(id: string): Item_.Base;
+        find<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(id: string): Item_.Map<T>;
         getNodes(): Item_.Node[];
         getEdges(): Item_.Edge[];
         getGroups(): Item_.Group[];
         getGuides(): Item_.Guide[];
         getItems(): Item_.Base[];
-        getItemByShape(shape: any): Item_.Base;
-        getItem(item: string | Item_.Base): Item_.Base;
+        getItemByShape(shape: {
+            id: string;
+        }): Item_.Base; /**
+         * Canvas height
+         * @type {number|undefined}
+         * unit pixel if undefined force fit height
+         */
+        getItem<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(item: string | Item_.Map<T>): Item_.Map<T>;
     };
 } | {
-    INIT: string;
     CFG: {
         layout: object | Function;
     };
+    INIT: string;
     AUGMENT: {
         _initLayout(): void;
         _getLayoutCfg(): any;
@@ -51,7 +58,6 @@ declare const Mixins: ({
         getLayout(): any;
     };
 } | {
-    INIT: string;
     CFG: {
         animate: boolean | Partial<{
             show: string | import("./controller/animate").ConfigCallback;
@@ -60,16 +66,12 @@ declare const Mixins: ({
             leave: string | import("./controller/animate").ConfigCallback;
             update: string | import("./controller/animate").ConfigCallback;
             graph: any;
-            /**
-             * Canvas width
-             * @type {number|undefined}
-             * unit pixel if undefined force fit width
-             */
             startCache: {};
             endCache: {};
             keykeyCache: {};
         }>;
     };
+    INIT: string;
     AUGMENT: {
         _initAnimate(): void;
     };
@@ -99,45 +101,35 @@ declare const Mixins: ({
         getFitViewPadding(): number[];
         setFitView(type: string): any;
         _getZoomRatio(ratio: any): any;
-        autoZoom(padding: any): void;
+        autoZoom(padding?: number | number[]): void;
         getZoom(): number;
         updateMatrix(matrix: any): any;
         zoom(point: number | G.Common.Point, ratio?: number): any;
-        zoomByDom(domPoint: any, ratio: any): any;
+        zoomByDom(domPoint: G.Common.Point, ratio: number): Graph;
         translate(dx: number, dy: number): any;
         translateByDom(dx: any, dy: any): any;
         getMatrix(): any;
         setMatrix(matrix: any): void;
         getPoint(domPoint: G.Common.Point): G.Common.Point;
-        getPointByDom(domPoint: any): {
-            x: any;
-            y: any;
-        };
-        getPointByCanvas(canvasPoint: any): any;
-        getPointByClient(clientPoint: any): any;
+        getPointByDom(domPoint: G.Common.Point): G.Common.Point;
+        getPointByCanvas(canvasPoint: G.Common.Point): G.Common.Point;
+        getPointByClient(clientPoint: G.Common.Point): G.Common.Point;
         getDomPoint(point: G.Common.Point): G.Common.Point;
-        getCanvasPoint(point: any): {
-            x: number;
-            y: number;
-        };
-        getClientPoint(point: any): {
-            x: any;
-            y: any;
-        };
-        focus(item: string | Item_.Base): any;
-        focusPoint(point: G.Common.Point): any;
-        focusPointByDom(domPoint: any): any;
+        getCanvasPoint(point: G.Common.Point): G.Common.Point;
+        getClientPoint(point: G.Common.Point): G.Common.Point;
+        focus(item: string | Item_.Base): Graph;
+        focusPoint(point: G.Common.Point): Graph;
+        focusPointByDom(domPoint: G.Common.Point): Graph;
     };
 } | {
-    INIT: string;
     CFG: {
         keyboardEnable: boolean;
     };
+    INIT: string;
     AUGMENT: {
         _initEvents(): void;
     };
 } | {
-    INIT: string;
     CFG: {
         modes: {
             [mode: string]: string[];
@@ -145,6 +137,7 @@ declare const Mixins: ({
         mode: string;
         _eventCache: {};
     };
+    INIT: string;
     AUGMENT: {
         _initModes(): void;
         changeMode(modeName: string): void;
@@ -234,7 +227,7 @@ declare class Graph extends Base {
     _initCanvas(): void;
     _initData(): void;
     _refresh(): void;
-    getKeyboardEventWrapper(): any;
+    getKeyboardEventWrapper(): unknown;
     getMouseEventWrapper(): this["_cfg"]["_canvas"]["_cfg"]["el"];
     /**
      * @param  {object} plugin - plugin instance
@@ -273,7 +266,7 @@ declare class Graph extends Base {
      * @param  {object} model data model
      * @return {object} shapeObj
      */
-    getShapeObj(type: string, model: Model.Base): any;
+    getShapeObj(type: Item_.Type | Item_.Base, model?: Pick<Model.Base, 'shape'>): any;
     /**
      * @return {object} source data
      */
@@ -326,7 +319,7 @@ declare class Graph extends Base {
      * @param {object} model data model
      * @return {Item} target item
      */
-    add(type: Item_.Type, model: Model.Base): Item_.Base;
+    add<T extends Item_.Type>(type: T, model: Model.Map<T>): Item_.Map<T>;
     /**
      * @param {string|Item} item - target item
      * @return {Graph} this
@@ -338,12 +331,6 @@ declare class Graph extends Base {
      * @return {Graph} this
      */
     simpleUpdate(item: Item_.Base, model: Partial<Model.Base>): this;
-    /**
-     * @param {string|Item|undefined} item target item
-     * @param {object} model data model
-     * @return {Graph} this
-     */
-    update(item: G.Common.ID | Item_.Base, model: Partial<Model.Base>): this;
     /**
      * change data
      * @param {object} data - source data
@@ -429,6 +416,8 @@ interface Graph extends Graph.MixedAugmentType, GraphEx {
         originMatrix: G.Common.Matrix;
     }]> & Event.Events<Event.MouseEvent, [Event.MouseEventObject]> & Event.Events<Event.KeyboardEvent, [Event.KeyboardEventObject]> & EventsEx;
     behaviourOn: Event['on'];
+    update<T extends Item_.Base>(item: T, model: Partial<Model.Map<T['type']>> & Graph.AnyModel): any;
+    update<T extends Item_.Type | 'base' = 'base'>(item: G.Common.ID, model: Partial<Model.Map<T>> & Graph.AnyModel): any;
 }
 declare namespace Graph {
     type MixedAugmentType = GUtil.MixArray<typeof Mixins, 'AUGMENT'>;
@@ -465,4 +454,7 @@ declare namespace Graph {
         [id: string]: Item_.Base;
         [id: number]: Item_.Base;
     };
+    interface AnyModel {
+        [x: string]: any;
+    }
 }

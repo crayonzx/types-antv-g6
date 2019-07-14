@@ -38,7 +38,7 @@ declare const _default: {
         /**
          * @param {number|array} padding padding
          */
-        autoZoom(padding: any): void;
+        autoZoom(padding?: number | number[]): void;
         /**
          * @return {number} zoom
          */
@@ -59,7 +59,7 @@ declare const _default: {
          * @param {number} ratio scale ratio
          * @return {Graph} this
          */
-        zoomByDom(domPoint: any, ratio: any): any;
+        zoomByDom(domPoint: Common.Point, ratio: number): Graph;
         /**
          * @param {number} dx x offset
          * @param {number} dy y offset
@@ -89,20 +89,17 @@ declare const _default: {
          * @param {object} domPoint domPoint
          * @return {object} graph point
          */
-        getPointByDom(domPoint: any): {
-            x: any;
-            y: any;
-        };
+        getPointByDom(domPoint: Common.Point): Common.Point;
         /**
          * @param {object} canvasPoint - canvas point
          * @return {object} graph point
          */
-        getPointByCanvas(canvasPoint: any): any;
+        getPointByCanvas(canvasPoint: Common.Point): Common.Point;
         /**
          * @param {object} clientPoint - client point
          * @return {object} graph point
          */
-        getPointByClient(clientPoint: any): any;
+        getPointByClient(clientPoint: Common.Point): Common.Point;
         /**
          * @param {object} point graph point
          * @return {object} dom point
@@ -112,33 +109,27 @@ declare const _default: {
          * @param {object} point graph point
          * @return {object} canvas point
          */
-        getCanvasPoint(point: any): {
-            x: number;
-            y: number;
-        };
+        getCanvasPoint(point: Common.Point): Common.Point;
         /**
          * @param {object} point graph point
          * @return {object} client point
          */
-        getClientPoint(point: any): {
-            x: any;
-            y: any;
-        };
+        getClientPoint(point: Common.Point): Common.Point;
         /**
          * @param {object} item item or itemId
          * @return {Graph} this
          */
-        focus(item: string | Item.Base): any;
+        focus(item: string | Item.Base): Graph;
         /**
          * @param {object} point graph point
          * @return {Graph} this
          */
-        focusPoint(point: Common.Point): any;
+        focusPoint(point: Common.Point): Graph;
         /**
          * @param {object} domPoint dom point
          * @return {Graph} this
          */
-        focusPointByDom(domPoint: any): any;
+        focusPointByDom(domPoint: Common.Point): Graph;
     };
 };
 export = _default;

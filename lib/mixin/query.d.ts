@@ -1,7 +1,7 @@
 import Item from '../items';
 declare const _default: {
     AUGMENT: {
-        find(id: string): Item.Base;
+        find<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(id: string): Item.Map<T>;
         /**
          * get nodes
          * @return {array} rst
@@ -32,13 +32,15 @@ declare const _default: {
          * @param  {G.Shape} shape - the shape from g
          * @return {string}  item.id - id of the item
          */
-        getItemByShape(shape: any): Item.Base;
+        getItemByShape(shape: {
+            id: string;
+        }): Item.Base;
         /**
          * get item item || itemId
          * @param  {object|string} item - the shape from g
          * @return {object}  item
          */
-        getItem(item: string | Item.Base): Item.Base;
+        getItem<T extends "base" | "group" | "node" | "edge" | "guide" = "base">(item: string | Item.Map<T>): Item.Map<T>;
     };
 };
 export = _default;

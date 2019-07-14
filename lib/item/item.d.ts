@@ -1,4 +1,5 @@
 /// <reference types="@antv/util" />
+/// <reference types="antv__g" />
 /**
  * @fileOverview item
  * @author huangtonger@aliyun.com
@@ -13,7 +14,7 @@ declare class Item {
     _initGroup(): void;
     _calculateBBox(): G.Common.BBox;
     getLabel(): any;
-    getGraph(): Graph;
+    getGraph(): G6.Graph;
     _setShapeObj(): void;
     _afterDraw(): void;
     _cacheModel(): void;
@@ -37,9 +38,6 @@ declare class Item {
     getBBox(): G.Common.BBox;
     layoutUpdate(): void;
     update(): void;
-    getModel<T extends {
-        model: {};
-    }>(this: T): T['model'];
     getKeyShape(): G.Shape;
     getGraphicGroup(): Item.GraphicGroup;
     getHierarchy(): any;
@@ -72,6 +70,11 @@ interface Item<T extends Item.Type = Item.Type> extends ItemEx {
     /** The followings are from 'Graph._addItems' */
     mapper: any;
     itemMap: Graph.ItemMap;
+    getModel<T extends {
+        model: {};
+    }>(this: T): T['model'];
+    getModel<T extends G6.Item.Type>(): G6.Model.Map<T>;
+    getModel<T extends G6.Model.Base>(): T;
 }
 declare namespace Item {
     type Type = 'node' | 'edge' | 'group' | 'guide';

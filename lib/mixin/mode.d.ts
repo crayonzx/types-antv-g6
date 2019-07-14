@@ -1,5 +1,4 @@
 declare const _default: {
-    INIT: string;
     CFG: {
         /**
           * mode list  key - value, key - mode name, value - behaviors
@@ -15,6 +14,7 @@ declare const _default: {
         mode: string;
         _eventCache: {};
     };
+    INIT: string;
     AUGMENT: {
         _initModes(): void;
         /**

@@ -3,7 +3,6 @@
  * @author huangtonger@aliyun.com
  */
 declare const _default: {
-    INIT: string;
     CFG: {
         /**
          * Layout cfg
@@ -11,6 +10,7 @@ declare const _default: {
          */
         layout: object | Function;
     };
+    INIT: string;
     AUGMENT: {
         _initLayout(): void;
         _getLayoutCfg(): any;
