@@ -14,6 +14,6 @@ declare const _default: {
     getLabel(item: Node<"node">): string;
     drawKeyShape(item: Node<"node">): GShape;
     drawLabel(item: Node<"node">): GShape;
-    getPath(item: Node<"node">): any[][];
+    getPath(item: Node<"node">): GCommon.SVGPath.Cmd[];
 } & Pick<import("../interfaces").Node, "anchor" | "getSelectedStyle">;
 export = _default;

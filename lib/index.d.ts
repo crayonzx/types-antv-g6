@@ -1,39 +1,44 @@
+/// <reference types="antv__g" />
 /// <reference types="@antv/util" />
+/**
+ * @fileOverview entry file
+ * @author huangtonger@aliyun.com
+ */
+import Shape_ = require('./shape/');
 import Handler = require('./handler');
+import Global_ = require('./global');
+import version_ = require('./version');
 import G_ = require('@antv/g/lib');
 declare namespace G6 {
-    const Graph: typeof import('./graph');
+    export import Graph = Graph_;
     const Tree: typeof import('./tree');
     const Util: typeof import('./util/');
     const Layouts: typeof import('./layouts/');
     export import G = G_;
     const Plugins: typeof import('./plugins');
     const Components: {};
-    const Global: typeof import('./global');
-    const Shape: typeof import('./shape/');
-    const registerNode: typeof Shape.registerNode;
-    const registerEdge: typeof Shape.registerEdge;
-    const registerGroup: typeof Shape.registerGroup;
-    const registerGuide: typeof Shape.registerGuide;
+    const Global: typeof Global_;
+    export import Shape = Shape_;
+    const registerNode: Shape.registerNode;
+    const registerEdge: Shape.registerEdge;
+    const registerGroup: Shape.registerGroup;
+    const registerGuide: Shape.registerGuide;
     const registerBehaviour: typeof Handler.registerBehaviour;
-    const version = "2.2.6";
+    const version: typeof version_;
     function track(track: any): void;
 }
 export = G6;
 import Model_ from './model';
 import Item_ from './items';
 import Event_ from './event';
+import Graph_ from './graph';
 declare namespace G6 {
-    type Graph = import('./graph');
     export import Item = Item_;
     export import Model = Model_;
     export import Event = Event_;
-    export import GShape = G.Shapes;
-    type GGroup = G.Group;
-    export import Common = G.Common;
-    namespace Graph {
-        type Config = import('./graph').Config;
-    }
+    export import GShape = G_.Shape;
+    export import Common = G_.Common;
+    type GGroup = G_.Group;
     type PluginsMap = typeof G6.Plugins;
     type PluginNames = keyof PluginsMap;
     type Instance<T> = T extends new (...args: any[]) => any ? InstanceType<T> : T;

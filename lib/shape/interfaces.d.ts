@@ -4,7 +4,7 @@ import Item from '../items';
 export declare type Anchors = Array<[number, number] | [number, number, any]>;
 export interface Node {
     /** 绘制, 返回的图形既是该图项的 keyShape -- 关键形 */
-    draw?(item: Item.Node): G.Shapes.Base;
+    draw?(item: Item.Node): G.Shape;
     /** 获取锚点 */
     anchor?: ((item: Item.Node) => Anchors) | Anchors;
     /** 默认样式 */
@@ -14,7 +14,7 @@ export interface Node {
 }
 export interface Edge {
     /** 绘制, 返回的图形既是该图项的 keyShape -- 关键形 */
-    draw?(item: Item.Edge): G.Shapes.Shape<'path'>;
+    draw?(item: Item.Edge): G.Shape.Shape<'path'>;
     getPath?(item: Item.Edge): G.Common.SVGPath;
     startArrow?: {
         path?(item: Item.Edge): G.Common.SVGPath;
@@ -27,21 +27,25 @@ export interface Edge {
         style?(item: Item.Edge): G.Common.Style;
     };
     /** 默认样式 */
-    getStyle?(item: Item.Edge): G.Shapes.Attrs<'path'>;
+    getStyle?(item: Item.Edge): G.Shape.Attrs<'path'>;
     /** 选中样式 */
-    getSelectedStyle?(item: Item.Edge): G.Shapes.Attrs<'path'>;
+    getSelectedStyle?(item: Item.Edge): G.Shape.Attrs<'path'>;
     afterDraw?(item: Item.Edge): void;
+    getPathByPoints?(ps: Array<{
+        x: number;
+        y: number;
+    }>, source?: Item.Node, target?: Item.Node): G.Common.SVGPath;
 }
 export interface Group {
     /** 绘制, 返回的图形既是该图项的 keyShape -- 关键形 */
-    draw?(item: Item.Group): G.Shapes.Base;
+    draw?(item: Item.Group): G.Shape;
     /** 获取锚点 */
     anchor?: G.Common.Points;
 }
 export interface Guide {
 }
 export declare type RegisterShape<T extends Node | Edge | Group | Guide> = <U>(name: string, cfg: U | T, extendShape?: string) => U & Pick<T, Exclude<keyof T, keyof U>>;
-export declare type Shape = {
+export interface Shape {
     registerShapeManager<T>(type: string, cfg: T): ShapeManager<T>;
     registerNode: RegisterShape<Node>;
     registerEdge: RegisterShape<Edge>;
@@ -68,7 +72,7 @@ export declare type Shape = {
     }> & {
         common: typeof import('./guides/common');
     };
-};
+}
 export declare type ShapeManager<T = {}> = GUtil.Overwrite<{
     defaultShapeType?: string | undefined | null;
     getShape(type: string, inputDefaultShape?: string): any;
