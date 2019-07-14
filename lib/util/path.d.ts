@@ -4,19 +4,27 @@
  */
 /// <reference types="@antv/util" />
 import G = require('@antv/g/lib');
-declare const PathUtil1: {
-    catmullRomToBezier: (crp: number[], z: boolean) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    fillPath: (source: any, target: any) => any;
-    fillPathByDiff: (source: any, target: any) => any;
-    formatPath: (fromPath: any, toPath: any) => any;
-    intersection: (path1: G.Common.SVGPathOrStr, path2: G.Common.SVGPathOrStr) => G.Common.Point[];
-    parsePathArray: (path: []) => string;
-    parsePathString: (pathString: G.Common.SVGPathOrStr) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    pathToAbsolute: (pathArray: G.Common.SVGPathOrStr) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    pathTocurve: (path: G.Common.SVGPathOrStr, path2?: G.Common.SVGPathOrStr) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    rectPath: (x: number, y: number, w: number, h: number, r?: number) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    getRectPath: (x: number, y: number, w: number, h: number, r?: number) => (["M" | "m", number, number] | ["L" | "l", number, number] | ["H" | "h", number] | ["V" | "v", number] | ["C" | "c", number, number, number, number, number, number] | ["s" | "S", number, number, number, number] | ["q" | "Q", number, number, number, number] | ["T" | "t", number, number] | ["a" | "A", number, number, number, number, number, number, number] | ["Z" | "z"])[];
-    pointsToPolygon: (points: any) => any[][];
-    getEllipsePath: (x: any, y: any, rx: any, ry: any) => any[][];
+import BaseUtil = require('./base');
+declare const PathUtil: PathUtil;
+declare const PathUtil0: {
+    getRectPath: typeof G.PathUtil.rectPath;
+    /**
+     * points to polygon
+     * TODO improve performance
+     * @param {array}  points input points
+     * @param {Boolen} z if close path
+     * @return {string} Path
+     */
+    pointsToPolygon(points: G.Common.Point[]): G.Common.SVGPath;
+    /**
+     * get ellipse path
+     * @param {number} x  horizontal coordinates
+     * @param {number} y  vertical coordinates
+     * @param {number} rx horizontal radius
+     * @param {number} ry vertical radius
+     * @return {array} path
+     */
+    getEllipsePath(x: number, y: number, rx: number, ry: number): G.Common.SVGPath;
 };
-export = PathUtil1;
+export = PathUtil;
+declare type PathUtil = BaseUtil.Overwrite<typeof G.PathUtil, typeof PathUtil0>;

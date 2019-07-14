@@ -2,24 +2,26 @@
  * @fileOverview graph util
  * @author huangtonger@aliyun.com
  */
-declare const _default: {
+declare const GraphUtil: {
     /**
      * determine whether a node
      * @param  {object}  item item
      * @return {boolean} bool
      */
-    isNode(item: any): boolean;
+    isNode(item: object): item is Item.Node;
     /**
      * determine whether a edge
      * @param  {object}  item item
      * @return {boolean} bool
      */
-    isEdge(item: any): boolean;
+    isEdge(item: object): item is Item.Edge;
     /**
      * determine whether a group
      * @param  {object}  item item
      * @return {boolean} bool
      */
-    isGroup(item: any): boolean;
+    isGroup(item: object): item is Item.Group;
 };
-export = _default;
+export = GraphUtil;
+declare type GraphUtil = typeof GraphUtil;
+import Item from '../items';
