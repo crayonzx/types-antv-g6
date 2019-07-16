@@ -128,7 +128,7 @@ declare class Graph extends Base {
      * @param  {function} callback - callback
      * @return {Graph} this
      */
-    preventAnimate(callback: any): this;
+    preventAnimate(callback: () => any): this;
     /**
      * @param  {string} type item type
      * @param  {object} model data model
@@ -284,8 +284,8 @@ interface Graph extends Graph.MixedAugmentType, GraphEx {
         originMatrix: G.Common.Matrix;
     }]> & Event.Events<Event.MouseEvent, [Event.MouseEventObject]> & Event.Events<Event.KeyboardEvent, [Event.KeyboardEventObject]> & EventsEx;
     behaviourOn: Event['on'];
-    update<T extends Item_.Base>(item: T, model: Partial<Model.Map<T['type']>> & Graph.AnyModel): any;
-    update<T extends Item_.Type | 'base' = 'base'>(item: G.Common.ID, model: Partial<Model.Map<T>> & Graph.AnyModel): any;
+    update<T extends Item_.Base>(item: T, model: Partial<Model.Map<T['type']>>): this;
+    update<T extends Item_.Type | 'base' = 'base'>(item: G.Common.ID, model: Partial<Model.Map<T>>): this;
 }
 declare namespace Graph {
     type MixedAugmentType = GUtil.MixArray<Mixins, 'AUGMENT'>;
@@ -322,7 +322,4 @@ declare namespace Graph {
         [id: string]: Item_.Base;
         [id: number]: Item_.Base;
     };
-    interface AnyModel {
-        [x: string]: any;
-    }
 }

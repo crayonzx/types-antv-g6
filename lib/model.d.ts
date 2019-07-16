@@ -23,6 +23,8 @@ export declare namespace Model {
         label?: string;
         /** 描述信息 */
         description?: string;
+        [x: string]: any;
+        [x: number]: any;
     }
     interface Node extends Base {
         x: number;
