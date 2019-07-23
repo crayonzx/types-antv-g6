@@ -5,35 +5,53 @@ declare type Event_ = Pick<EventEmitter, Exclude<keyof EventEmitter, keyof Event
 interface Event extends Event_ {
 }
 interface Event0 {
-    addListener: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event: K, listener: Event.EventHandler<Event.EventArgs<T, K>>) => T;
+    addListener: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event: K, listener: Event.EventHandler<Event.EventArgs<T, K>>): T;
+        <T, K extends string>(this: T, event: K, listener: T extends Event.Eventor<K> ? never : Event.EventHandler): T extends Event.Eventor<K> ? never : T;
+    };
     addOnceListener: Event['addListener'];
     removeListener: Event['addListener'];
-    emit: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event: K, ...arg: Event.EventArgs<T, K>) => T;
+    emit: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event: K, ...args: Event.EventArgs<T, K>): T;
+        <T, K extends string>(this: T, event: K, ...args: T extends Event.Eventor<K> ? never : any[]): T extends Event.Eventor<K> ? never : T;
+    };
     on: Event['addListener'];
     once: Event['addListener'];
     off: Event['addListener'];
-    getListeners: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event?: K) => Array<Event.EventHandler<Event.EventArgs<T, K>>>;
-    addListeners: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event: K, listeners: Array<Event.EventHandler<Event.EventArgs<T, K>>>) => T;
+    getListeners: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event: K): Array<Event.EventHandler<Event.EventArgs<T, K>>>;
+        <T, K extends string>(this: T, event: K): T extends Event.Eventor<K> ? never : Event.EventHandler[];
+    };
+    addListeners: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event: K, listeners: Array<Event.EventHandler<Event.EventArgs<T, K>>>): T;
+        <T, K extends string>(this: T, event: K, listeners: T extends Event.Eventor<K> ? never : Event.EventHandler[]): T extends Event.Eventor<K> ? never : T;
+    };
     removeListeners: Event['addListeners'];
-    trigger: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event: K, args: Event.EventArgs<T, K>) => T;
+    trigger: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event: K, args: Event.EventArgs<T, K>): T;
+        <T, K extends string>(this: T, event: K, args: T extends Event.Eventor<K> ? never : any[]): T extends Event.Eventor<K> ? never : T;
+    };
     emitEvent: Event['trigger'];
-    removeEvent: <T extends Event.Eventor<string, any[]>, K extends Event.EventKeys<T>>(this: T, event?: K) => T;
+    removeEvent: {
+        <T extends Event.Eventor, K extends Event.EventKeys<T>>(this: T, event?: K): T;
+        <T>(this: T, event?: string): T;
+    };
     removeAllListeners: Event['removeEvent'];
 }
 declare namespace Event {
     /** HACK: '__eventArgsType' is only to help to get type of event args. */
-    type EventValue<T extends any[]> = Array<EventHandler<T>> & {
+    type EventValue<T extends any[] = any[]> = Array<EventHandler<T>> & {
         __eventArgsType: T;
     };
     type Events<E extends string, T extends any[]> = {
         [event in E]: EventValue<T>;
     };
-    type EventHandler<T extends any[]> = (...args: T) => any;
-    interface Eventor<E extends string, T extends any[]> {
+    type EventHandler<T extends any[] = any[]> = (...args: T) => any;
+    interface Eventor<E extends string = string, T extends any[] = any[]> {
         _events: Event.Events<E, T>;
     }
-    type EventKeys<T extends Eventor<string, any[]>> = keyof T['_events'];
-    type EventArgs<T extends Eventor<string, any[]>, K extends EventKeys<T>> = T['_events'][K]['__eventArgsType'];
+    type EventKeys<T extends Eventor> = keyof T['_events'];
+    type EventArgs<T extends Eventor, K extends EventKeys<T>> = T['_events'][K]['__eventArgsType'];
     type MouseEvent = 'click' | 'dblclick' | 'mouseenter' | 'mouseleave' | 'mousedown' | 'mouseup' | 'mousemove' | 'dragstart' | 'drag' | 'dragend' | 'dragenter' | 'dragleave' | 'drop' | 'contextmenu' | 'wheel' | 'mousewheel';
     type KeyboardEvent = 'keydown' | 'keyup' | 'keypress';
     type DomEventMap = HTMLElementEventMap;

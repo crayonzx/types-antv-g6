@@ -21,7 +21,7 @@ declare const Mixin: {
           * change mode
           * @param {string} modeName - name of mode
           */
-        changeMode(modeName: string): void;
+        changeMode(modeName?: string): void;
         /**
           * add behavior to the current mode
           * @param {Array | String} behaviour - add a behaviour or a list behaviours to the mode
