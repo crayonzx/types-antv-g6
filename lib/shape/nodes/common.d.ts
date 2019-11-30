@@ -7,10 +7,8 @@ import GShape from '@antv/g/lib/core/shape';
 import Node from '../../item/node';
 declare const _default: {
     draw(item: Node<"node">): GShape;
-    getSize(item: Node<"node">): number[];
-    getStyle(item: Node<"node">): {
-        lineWidth: number;
-    } & GCommon.Style;
+    getSize(item: Node<"node">): [number, number];
+    getStyle(item: Node<"node">): GCommon.Style;
     getLabel(item: Node<"node">): string;
     drawKeyShape(item: Node<"node">): GShape;
     drawLabel(item: Node<"node">): GShape;
